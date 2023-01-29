@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from textblob import TextBlob
 
-url = "https://seekingalpha.com/article/4550191-lpl-financial-holdings-inc-lpla-q3-2022-earnings-call-transcript"
+url = "https://seekingalpha.com/article/4528986-lpl-financial-holdings-inc-lpla-ceo-dan-arnold-on-q2-2022-results-earnings-call-transcript"
 page = requests.get(url)
 
 soup = BeautifulSoup(page.content, "html.parser")
@@ -16,5 +16,7 @@ for words in transcript:
 blob = TextBlob(text)
 sentiment = blob.sentiment
 
-# Print the sentiment scores
-print(sentiment)
+if blob.sentiment.polarity > 0:
+    print("The overall polarity is " + str(blob.sentiment.polarity) + " which means that the overall sentiment is positive.")
+else: 
+    print("The overall polarity is " + str(blob.sentiment.polarity) + " which means that the overall sentiment is negative.")
