@@ -1,18 +1,26 @@
+from tkinter import *
 import yfinance as yf
 import matplotlib.pyplot as plt
 
-ticker = "LPLA"
+root = Tk()
+root.title('2022 Stock Chart')
 
-quarter = input("Enter the quarter you would like to see (Q1, Q2, Q3, Q4): ")
-if quarter == "Q1":
-    start_date = "2022-01-01"
-    end_date = "2022-03-31"
+tick = Entry(root, width=50)
+tick.pack()
+tick.insert(0, "Enter the ticker name")
 
-stock_data = yf.download(ticker, start=start_date, end=end_date)
+def getStock():
+    ticker = tick.get()
+    stock_data = yf.download(ticker, start="2022-01-01", end="2022-12-31")
 
-plt.plot(stock_data["Close"])
-plt.xlabel("Date")
-plt.ylabel("Closing Price")
-plt.title(f"{ticker} Stock Price")
+    plt.plot(stock_data["Close"])
+    plt.xlabel("Date")
+    plt.ylabel("Closing Price")
+    plt.title(f"{ticker} Stock Price")
 
-plt.show()
+    plt.show()
+
+myButton = Button(root, text="Generate Plot", command=getStock)
+myButton.pack()
+
+root.mainloop()
